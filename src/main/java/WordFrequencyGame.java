@@ -20,15 +20,7 @@ public class WordFrequencyGame {
 
             try {
 
-                Map<String, List<WordInfo>> wordMap = getWordMap(sentence);
-                List<WordInfo> wordInfos;
-
-                List<WordInfo> tempWordInfos = new ArrayList<>();
-                for (Map.Entry<String, List<WordInfo>> entry : wordMap.entrySet()) {
-                    WordInfo wordInfo = new WordInfo(entry.getKey(), entry.getValue().size());
-                    tempWordInfos.add(wordInfo);
-                }
-                wordInfos = tempWordInfos;
+                List<WordInfo> wordInfos = calculateWordInfoCounts(sentence);
 
                 wordInfos.sort((firstWordInfo, secondWordInfo) -> secondWordInfo.getWordCount() - firstWordInfo.getWordCount());
 
@@ -37,6 +29,19 @@ public class WordFrequencyGame {
                 return ERROR_MESSAGE;
             }
         }
+    }
+
+    private List<WordInfo> calculateWordInfoCounts(String sentence) {
+        Map<String, List<WordInfo>> wordMap = getWordMap(sentence);
+        List<WordInfo> wordInfos;
+
+        List<WordInfo> tempWordInfos = new ArrayList<>();
+        for (Map.Entry<String, List<WordInfo>> entry : wordMap.entrySet()) {
+            WordInfo wordInfo = new WordInfo(entry.getKey(), entry.getValue().size());
+            tempWordInfos.add(wordInfo);
+        }
+        wordInfos = tempWordInfos;
+        return wordInfos;
     }
 
     private String printResultMessage(List<WordInfo> wordInfos) {
