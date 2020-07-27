@@ -1,8 +1,4 @@
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.StringJoiner;
+import java.util.*;
 
 public class WordFrequencyGame {
 
@@ -32,15 +28,12 @@ public class WordFrequencyGame {
     }
 
     private List<WordInfo> calculateWordInfoCounts(String sentence) {
-        Map<String, List<WordInfo>> wordMap = getWordMap(sentence);
-        List<WordInfo> wordInfos;
-
-        List<WordInfo> tempWordInfos = new ArrayList<>();
-        for (Map.Entry<String, List<WordInfo>> entry : wordMap.entrySet()) {
-            WordInfo wordInfo = new WordInfo(entry.getKey(), entry.getValue().size());
-            tempWordInfos.add(wordInfo);
+        List<WordInfo> wordInfos = new ArrayList<>();
+        List<String> words = Arrays.asList(sentence.split(SPLIT_REGEX));
+        for (String unitWord : new HashSet<>(words)) {
+            int count = (int) words.stream().filter(unitWord::equals).count();
+            wordInfos.add(new WordInfo(unitWord,count));
         }
-        wordInfos = tempWordInfos;
         return wordInfos;
     }
 
@@ -53,31 +46,4 @@ public class WordFrequencyGame {
         return joiner.toString();
     }
 
-    private Map<String, List<WordInfo>> getWordMap(String sentence) {
-        String[] words = sentence.split(SPLIT_REGEX);
-
-        List<WordInfo> wordInfos = new ArrayList<>();
-        for (String word : words) {
-            WordInfo wordInfo = new WordInfo(word, 1);
-            wordInfos.add(wordInfo);
-        }
-
-        return getListMap(wordInfos);
-    }
-
-
-    private Map<String, List<WordInfo>> getListMap(List<WordInfo> wordInfos) {
-        Map<String, List<WordInfo>> wordInfoMap = new HashMap<>();
-        for (WordInfo wordInfo : wordInfos){
-            if (!wordInfoMap.containsKey(wordInfo.getValue())) {
-                List<WordInfo> tempWordInfos = new ArrayList<>();
-                tempWordInfos.add(wordInfo);
-                wordInfoMap.put(wordInfo.getValue(), tempWordInfos);
-            }
-            else {
-                wordInfoMap.get(wordInfo.getValue()).add(wordInfo);
-            }
-        }
-        return wordInfoMap;
-    }
 }
