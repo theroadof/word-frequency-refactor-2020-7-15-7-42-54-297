@@ -7,6 +7,9 @@ import java.util.StringJoiner;
 public class WordFrequencyGame {
 
     private static final String SPLIT_REGEX = "\\s+";
+    private static final String LINE_BREAK = "\n";
+    private static final String ERROR_MESSAGE = "Calculate Error";
+    private static final String SPACE = " ";
 
     public String getResult(String inputStr) {
 
@@ -36,14 +39,14 @@ public class WordFrequencyGame {
 
                 wordInfoList.sort((w1, w2) -> w2.getWordCount() - w1.getWordCount());
 
-                StringJoiner joiner = new StringJoiner("\n");
+                StringJoiner joiner = new StringJoiner(LINE_BREAK);
                 for (WordInfo w : wordInfoList) {
-                    String s = w.getValue() + " " +w.getWordCount();
+                    String s = w.getValue() + SPACE +w.getWordCount();
                     joiner.add(s);
                 }
                 return joiner.toString();
             } catch (Exception e) {
-                return "Calculate Error";
+                return ERROR_MESSAGE;
             }
         }
     }
