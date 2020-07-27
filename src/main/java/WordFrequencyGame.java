@@ -8,18 +8,12 @@ public class WordFrequencyGame {
     private static final String SPACE = " ";
 
     public String getResult(String sentence) {
-
-
-        if (sentence.split(SPLIT_REGEX).length == 1) {
-            return sentence + " 1";
-        } else {
-            try {
-                List<WordInfo> wordInfos = calculateWordInfoCounts(sentence);
-                wordInfos.sort((firstWordInfo, secondWordInfo) -> secondWordInfo.getWordCount() - firstWordInfo.getWordCount());
-                return printResultMessage(wordInfos);
-            } catch (Exception e) {
-                return ERROR_MESSAGE;
-            }
+        try {
+            List<WordInfo> wordInfos = calculateWordInfoCounts(sentence);
+            wordInfos.sort((firstWordInfo, secondWordInfo) -> secondWordInfo.getWordCount() - firstWordInfo.getWordCount());
+            return printResultMessage(wordInfos);
+        } catch (Exception e) {
+            return ERROR_MESSAGE;
         }
     }
 
